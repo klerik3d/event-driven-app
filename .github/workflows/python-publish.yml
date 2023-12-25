@@ -1,0 +1,35 @@
+name: Publish Python Package
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # Adjust as needed
+
+    - name: Install poetry
+      run: pip install poetry
+
+    - name: Install dependencies
+      run: poetry install
+
+    - name: Run tests
+      run: poetry run pytest
+      # This step will fail the workflow if tests do not pass
+
+    - name: Build package
+      run: poetry build
+
+    - name: Publish package
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/master')
+      uses: pypa/gh-action-pypi-publish@v1.4.2
+      with:
+        password: ${{ secrets.PYPI_API_TOKEN }}
