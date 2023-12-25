@@ -10,9 +10,7 @@ python = "^3.12"
 pydantic = "^2.5.3"
 
 [[tool.poetry.packages]]
-include = "event-driven-app"
-from = "src"
-
+include = "src"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.13.2"
