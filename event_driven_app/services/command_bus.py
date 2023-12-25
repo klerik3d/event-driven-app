@@ -4,8 +4,8 @@ from inspect import isclass
 from os import listdir, sep
 from typing import Any, Dict, List, Tuple, Type
 
-from src.entities import Command, CommandHandler, Event, EventHandler
-from src.services.dependeny_injection import DependencyInjector
+from event_driven_app.entities import Command, CommandHandler, Event, EventHandler
+from event_driven_app.services.dependeny_injection import DependencyInjector
 
 
 class AbstractManager(ABC):

@@ -1,6 +1,6 @@
 import pytest
 
-from src.services import DependencyInjector, ServiceManager
+from event_driven_app.services import DependencyInjector, ServiceManager
 
 
 # Mock classes and services for testing

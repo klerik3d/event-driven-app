@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "event-driven-app"
-version = "0.1.1"
+version = "0.1.2"
 description = ""
 authors = ["ruslan.shmatov <ruslan.shmatov@casafari.com>"]
 readme = "README.md"
@@ -8,9 +8,6 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 pydantic = "^2.5.3"
-
-[[tool.poetry.packages]]
-include = "src"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.13.2"

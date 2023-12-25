@@ -1,7 +1,7 @@
 from typing import Any, Dict, List, Type
 
-from src.entities import Command, CommandHandler, Event, EventHandler
-from src.services import (CommandManager, DependencyInjector, EventManager,
+from event_driven_app.entities import Command, CommandHandler, Event, EventHandler
+from event_driven_app.services import (CommandManager, DependencyInjector, EventManager,
                           ServiceManager)
 
 

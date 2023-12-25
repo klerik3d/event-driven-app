@@ -1,6 +1,6 @@
 from typing import Any, Dict, Type
 
-from src.services.service_manager import ServiceManager
+from event_driven_app.services.service_manager import ServiceManager
 
 
 class DependencyInjector:

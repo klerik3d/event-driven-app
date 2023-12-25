@@ -2,9 +2,9 @@ from abc import ABC
 
 import pytest
 
-from src.entities import Command, CommandHandler, Event, EventHandler
+from event_driven_app.entities import Command, CommandHandler, Event, EventHandler
 
-from src.application import App
+from event_driven_app.application import App
 
 
 class MockService:

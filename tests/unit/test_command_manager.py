@@ -1,7 +1,7 @@
 import pytest
 
-from src.entities import Command, CommandHandler
-from src.services import (CommandManager, DependencyInjector, EventManager,
+from event_driven_app.entities import Command, CommandHandler
+from event_driven_app.services import (CommandManager, DependencyInjector, EventManager,
                           ServiceManager)
 
 

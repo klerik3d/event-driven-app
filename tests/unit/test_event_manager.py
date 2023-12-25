@@ -1,7 +1,7 @@
 import pytest
 
-from src.entities import Event, EventHandler
-from src.services import DependencyInjector, EventManager, ServiceManager
+from event_driven_app.entities import Event, EventHandler
+from event_driven_app.services import DependencyInjector, EventManager, ServiceManager
 
 
 # Mock classes for testing
