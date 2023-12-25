@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "event-driven-app"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["ruslan.shmatov <ruslan.shmatov@casafari.com>"]
 readme = "README.md"

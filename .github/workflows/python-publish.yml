@@ -28,8 +28,11 @@ jobs:
     - name: Build package
       run: poetry build
 
+    - name: List built packages
+      run: ls dist/
+
     - name: Publish package
-      if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/master')
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/main')
       uses: pypa/gh-action-pypi-publish@v1.4.2
       with:
         password: ${{ secrets.PYPI_API_TOKEN }}
