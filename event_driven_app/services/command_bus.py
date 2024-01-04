@@ -1,10 +1,28 @@
-from abc import ABC, abstractmethod
+from abc import (
+    ABC,
+    abstractmethod,
+)
 from importlib import import_module
 from inspect import isclass
-from os import listdir, sep
-from typing import Any, Dict, List, Tuple, Type
+from logging import Logger
+from os import (
+    listdir,
+    sep,
+)
+from typing import (
+    Any,
+    Dict,
+    List,
+    Tuple,
+    Type,
+)
 
-from event_driven_app.entities import Command, CommandHandler, Event, EventHandler
+from event_driven_app.entities import (
+    Command,
+    CommandHandler,
+    Event,
+    EventHandler,
+)
 from event_driven_app.services.dependeny_injection import DependencyInjector
 
 
@@ -45,7 +63,8 @@ class EventManager(AbstractManager):
     def get_entity(self) -> Tuple[Type, Type]:
         return EventHandler, Event
 
-    def __init__(self):
+    def __init__(self, logger: Logger):
+        self.logger = logger
         self._handlers: Dict[Type[Event], List[Type[EventHandler]]] = {}
 
     def register_handler(
@@ -68,9 +87,12 @@ class EventManager(AbstractManager):
         :param event: The event instance to be handled.
         :param dependency_injector: The DependencyInjector to prepare dependencies.
         """
+        self.logger.info('Event triggered', extra={event.__class__.__name__: event.model_dump_json()})
         for handler in self._handlers.get(type(event), []):
             dependency = dependency_injector.prepare_dependency(handler)
+            self.logger.info(f'Event handler {handler.__name__} start')
             handler_instance: EventHandler = handler(event=event, **dependency)
+            self.logger.info(f'Event handler {handler.__name__} finish')
             handler_instance.handle()
             for new_event in handler_instance.events:
                 self.trigger(event=new_event, dependency_injector=dependency_injector)
@@ -81,7 +103,8 @@ class CommandManager(AbstractManager):
     Manages command execution by handling command types with respective handlers.
     """
 
-    def __init__(self):
+    def __init__(self, logger: Logger):
+        self.logger = logger
         self._handlers: Dict[Type[Command], Type[CommandHandler]] = {}
 
     def get_entity(self) -> Tuple[Type, Type]:
@@ -114,12 +137,15 @@ class CommandManager(AbstractManager):
         :param dependency_injector: The DependencyInjector for dependency injection.
         :return: The result of the command execution.
         """
+        self.logger.info('Command execute', extra={command.__class__.__name__: command.model_dump_json()})
         handler: Type[CommandHandler] = self._handlers.get(type(command))
         if not handler:
             raise ValueError(f"No handler registered for command type: {type(command)}")
         dependency = dependency_injector.prepare_dependency(handler)
+        self.logger.info(f'Command handler {handler.__name__} start')
         handler_instance: CommandHandler = handler(command=command, **dependency)
         result = handler_instance.handle()
+        self.logger.info(f'Command handler {handler.__name__} finish')
         for new_event in handler_instance.events:
             event_manager.trigger(
                 event=new_event, dependency_injector=dependency_injector

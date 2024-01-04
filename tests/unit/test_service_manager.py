@@ -1,3 +1,5 @@
+from unittest.mock import Mock
+
 import pytest
 
 from event_driven_app.services.service_manager import ServiceManager
@@ -10,12 +12,13 @@ class MockService:
 class TestServiceManager:
     @pytest.fixture
     def service_manager(self):
-        return ServiceManager()
+        return ServiceManager(Mock())
 
     def test_service_manager_initialization(self, service_manager):
         assert (
-            service_manager._services == {}
-        ), "ServiceManager should initialize with an empty _services dictionary."
+            len(service_manager._services) == 1
+        ), "ServiceManager should initialize with an logger _services dictionary."
+        assert list(service_manager._services.keys())[0].__name__ == 'Logger'
 
     def test_set_service(self, service_manager):
         mock_service_instance = MockService()

@@ -1,6 +1,11 @@
+from unittest.mock import Mock
+
 import pytest
 
-from event_driven_app.services import DependencyInjector, ServiceManager
+from event_driven_app.services import (
+    DependencyInjector,
+    ServiceManager,
+)
 
 
 # Mock classes and services for testing
@@ -21,7 +26,7 @@ class MockClassWithoutDependency:
 class TestDependencyInjector:
     @pytest.fixture
     def service_manager(self):
-        sm = ServiceManager()
+        sm = ServiceManager(Mock())
         sm.set_service(MockService, MockService())
         return sm
 

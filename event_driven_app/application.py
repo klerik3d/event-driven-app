@@ -1,16 +1,37 @@
-from typing import Any, Dict, List, Type
+from logging import (
+    Logger,
+    getLogger,
+)
+from typing import (
+    Any,
+    Dict,
+    List,
+    Type,
+)
 
-from event_driven_app.entities import Command, CommandHandler, Event, EventHandler
-from event_driven_app.services import (CommandManager, DependencyInjector, EventManager,
-                          ServiceManager)
+from event_driven_app.entities import (
+    Command,
+    CommandHandler,
+    Event,
+    EventHandler,
+)
+from event_driven_app.services import (
+    CommandManager,
+    DependencyInjector,
+    EventManager,
+    ServiceManager,
+)
 
 
 class App:
-    def __init__(self):
-        self.service_manager = ServiceManager()
+    def __init__(self, logger: Logger = None):
+        if not logger:
+            logger = getLogger('default')
+        self.service_manager = ServiceManager(logger)
         self.dependency_injector = DependencyInjector(self.service_manager)
-        self.event_manager = EventManager()
-        self.command_manager = CommandManager()
+        self.event_manager = EventManager(logger)
+        self.command_manager = CommandManager(logger)
+        logger.info('App inited')
 
     def process_event(self, event: Event):
         self.event_manager.trigger(

@@ -1,4 +1,9 @@
-from typing import Any, Dict, Type
+from logging import Logger
+from typing import (
+    Any,
+    Dict,
+    Type,
+)
 
 
 class ServiceManager:
@@ -6,8 +11,8 @@ class ServiceManager:
     Manages service instances for dependency injection.
     """
 
-    def __init__(self):
-        self._services: Dict[Type, Any] = {}
+    def __init__(self, logger: Logger):
+        self._services: Dict[Type, Any] = {Logger: logger}
 
     def get_service(self, service_type: Type) -> Any:
         """

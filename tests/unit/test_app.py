@@ -2,9 +2,13 @@ from abc import ABC
 
 import pytest
 
-from event_driven_app.entities import Command, CommandHandler, Event, EventHandler
-
 from event_driven_app.application import App
+from event_driven_app.entities import (
+    Command,
+    CommandHandler,
+    Event,
+    EventHandler,
+)
 
 
 class MockService:
@@ -41,7 +45,7 @@ def test_register_events(app):
 
     # Assert the event handler is registered for the event
     assert MockEvent in app.event_manager._handlers
-    assert type(app.event_manager._handlers[MockEvent]) == list
+    assert isinstance(app.event_manager._handlers[MockEvent], list)
     assert MockEventHandler in app.event_manager._handlers[MockEvent]
 
 

@@ -1,7 +1,16 @@
+from unittest.mock import Mock
+
 import pytest
 
-from event_driven_app.entities import Event, EventHandler
-from event_driven_app.services import DependencyInjector, EventManager, ServiceManager
+from event_driven_app.entities import (
+    Event,
+    EventHandler,
+)
+from event_driven_app.services import (
+    DependencyInjector,
+    EventManager,
+    ServiceManager,
+)
 
 
 # Mock classes for testing
@@ -22,12 +31,12 @@ class MockHandler(EventHandler):
 
 @pytest.fixture
 def event_manager():
-    return EventManager()
+    return EventManager(Mock())
 
 
 @pytest.fixture
 def service_manager():
-    return ServiceManager()
+    return ServiceManager(Mock())
 
 
 @pytest.fixture

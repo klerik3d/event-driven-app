@@ -1,8 +1,17 @@
+from unittest.mock import Mock
+
 import pytest
 
-from event_driven_app.entities import Command, CommandHandler
-from event_driven_app.services import (CommandManager, DependencyInjector, EventManager,
-                          ServiceManager)
+from event_driven_app.entities import (
+    Command,
+    CommandHandler,
+)
+from event_driven_app.services import (
+    CommandManager,
+    DependencyInjector,
+    EventManager,
+    ServiceManager,
+)
 
 
 # Mock classes for testing
@@ -23,12 +32,12 @@ class MockHandler(CommandHandler):
 
 @pytest.fixture
 def command_manager():
-    return CommandManager()
+    return CommandManager(Mock())
 
 
 @pytest.fixture
 def service_manager():
-    return ServiceManager()
+    return ServiceManager(Mock())
 
 
 @pytest.fixture
@@ -38,7 +47,7 @@ def dependency_injector(service_manager):
 
 @pytest.fixture
 def event_manager():
-    return EventManager()
+    return EventManager(Mock())
 
 
 def test_trigger_with_registered_handler(

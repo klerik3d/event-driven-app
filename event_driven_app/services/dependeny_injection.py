@@ -1,4 +1,8 @@
-from typing import Any, Dict, Type
+from typing import (
+    Any,
+    Dict,
+    Type,
+)
 
 from event_driven_app.services.service_manager import ServiceManager
 
