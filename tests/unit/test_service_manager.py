@@ -27,6 +27,26 @@ class TestServiceManager:
             service_manager._services[MockService] == mock_service_instance
         ), "set_service should correctly add service instances."
 
+    def test_set_service_provider(self, service_manager):
+        mock_service_instance = MockService()
+        service_manager.set_service(MockService, mock_service_instance)
+        assert (
+            service_manager._services[MockService] is mock_service_instance
+        ), "set_service should correctly add service instances."
+
+    def test_get_service_with_existing_service_from_provider(self, service_manager):
+        class A:
+            pass
+
+        def a_service_provider():
+            return A()
+        service_manager.set_service_provider(A, a_service_provider)
+        retrieved_service = service_manager.get_service(A)
+        print(retrieved_service)
+        assert (
+            isinstance(retrieved_service, A)
+        ), 'get_service should return the correct service instance for an existing service.'
+
     def test_get_service_with_existing_service(self, service_manager):
         mock_service_instance = MockService()
         service_manager.set_service(MockService, mock_service_instance)
